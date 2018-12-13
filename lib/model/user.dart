@@ -1,10 +1,21 @@
 class User {
-  String displayName;
-  String email;
-  String uid;
-  String password;
-  bool returnSecureToken;
+  final String userName;
+  final String token;
+  final String email;
+  final int userId;
 
-  User(this.displayName, this.email, this.uid, this.password,
-      this.returnSecureToken);
+  User(this.userName, this.token, this.email, this.userId);
+
+  User.fromJson(Map<String, dynamic> json)
+      : userName = json['name'],
+        token = json['token'],
+        email = json['email'],
+        userId = json['pk'];
+
+  Map<String, dynamic> toJson() => {
+        'name': userName,
+        'token': token,
+        'email': email,
+        'pk': userId,
+      };
 }

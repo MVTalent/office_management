@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:office_management/model/user.dart';
@@ -24,4 +25,4 @@ class UserAuth {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     return await firebaseAuth.signOut();
   }
-}
+}*/

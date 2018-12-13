@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:office_management/screens/info_page.dart';
-import 'package:office_management/screens/news_page.dart';
-import 'package:office_management/screens/people_page.dart';
-import 'package:office_management/screens/service_page.dart';
+import 'package:office_management/screens/home_screen.dart';
+import 'package:office_management/screens/info_screen.dart';
+import 'package:office_management/screens/login_screen.dart';
+import 'package:office_management/screens/news_screen.dart';
+import 'package:office_management/screens/people_screen.dart';
+import 'package:office_management/screens/service_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,6 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: <String,WidgetBuilder>{
+        "/HomeScreen": (BuildContext context) => HomeScreen(),
+        "/LoginScreen": (BuildContext context) => LoginScreen(),
+      },
       home: MyHomePage(title: 'Управление офисом'),
     );
   }
@@ -60,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: PageView(
+        body: LoginScreen(),/*PageView(
           children: <Widget>[
             NewsPage(),
             ServicePage(),
@@ -92,6 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
             //fixedColor: Colors.deepPurple,
             onTap: _onItemTapped,
           ),
-        ));
+        )*/);
   }
 }

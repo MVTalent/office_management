@@ -3,7 +3,7 @@ import 'package:office_management/model/service/negotiation_service.dart';
 import 'package:office_management/model/service/rest_room_service.dart';
 import 'package:office_management/model/service.dart';
 import 'package:office_management/model/service/skud_service.dart';
-import 'package:office_management/screens/service_info_page.dart';
+import 'package:office_management/screens/service_info_screen.dart';
 
 class ServicePage extends StatefulWidget {
   @override
