@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:office_management/screens/NewsPage.dart';
-import 'package:office_management/screens/ServicePage.dart';
+import 'package:office_management/screens/info_page.dart';
+import 'package:office_management/screens/news_page.dart';
+import 'package:office_management/screens/people_page.dart';
+import 'package:office_management/screens/service_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,23 +29,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int _page = 0;
+  PageController _pageController;
   Widget _bodyWidget = NewsPage();
 
-  void _onItemTapped(int index) {
-    switch (index) {
-      case 0:
-        _bodyWidget = NewsPage();
-        break;
-      case 1:
-        _bodyWidget = ServicePage();
-        break;
-      default:
-        _bodyWidget = NewsPage();
-        break;
-    }
+  @override
+  void initState() {
+    super.initState();
+    _pageController = new PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  void _onItemTapped(int page) {
+    _pageController.animateToPage(page, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  void onPageChanged(int page) {
     setState(() {
-      _selectedIndex = index;
+      this._page = page;
     });
   }
 
@@ -53,17 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: _bodyWidget,/*Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _bodyWidget
-              *//*Text('You have pushed the button this many times:',),
-              Text('4444', style: Theme.of(context).textTheme.display1,
-              ),*//*
-            ],
-          ),
-        ),*/
+        body: PageView(
+          children: <Widget>[
+            NewsPage(),
+            ServicePage(),
+            PeoplePage(),
+            InfoPage()
+          ],
+        onPageChanged: onPageChanged,
+        controller: _pageController,),
         bottomNavigationBar: new Theme(
           data: Theme.of(context).copyWith(
               canvasColor: Colors.blue,
@@ -83,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.info), title: Text('Информация')),
             ],
-            currentIndex: _selectedIndex,
+            currentIndex: _page,
             //fixedColor: Colors.deepPurple,
             onTap: _onItemTapped,
           ),
