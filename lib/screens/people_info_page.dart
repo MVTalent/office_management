@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class PeopleInfoPage extends StatelessWidget {
+
   PeopleInfoPage(this.data);
+
   final data;
+
   @override
   Widget build(BuildContext context) => new Scaffold(
       appBar: new AppBar(title: new Text('Информация о пользователе')),

@@ -31,7 +31,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _page = 0;
   PageController _pageController;
-  Widget _bodyWidget = NewsPage();
 
   @override
   void initState() {
