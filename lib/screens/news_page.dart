@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:office_management/model/article.dart';
 import 'package:http/http.dart' as http;
-import 'package:office_management/service/rest_client.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -38,16 +36,6 @@ class _NewsPageState extends State<NewsPage> {
     super.dispose();
   }
 
-/*
-  List<Article> parseArticle(String responseBody) {
-    //final parsed = (json.decode(responseBody) as List) .cast<Map<dynamic, dynamic>>();
-
-    return (json.decode(responseBody)['articles'] as List)
-        .map((e) => Article.fromJson(e))
-        .toList();
-  }
-*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +55,7 @@ class _NewsPageState extends State<NewsPage> {
                       return Container(
                         width: 250,
                         child: Card(
-                            color: Colors.purple[100],
+                            color: Colors.blue,
                             child: Center(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -80,30 +68,15 @@ class _NewsPageState extends State<NewsPage> {
                                         : Icon(Icons.art_track, size: 60),
                                     title: Text(
                                       articles[i].title,
-                                      style: TextStyle(fontSize: 12),
+                                      style: TextStyle(fontSize: 12, color: Colors.white),
                                     ),
                                     subtitle: Text(
                                       articles[i].description != null
                                           ? articles[i].description
                                           : "",
-                                      style: TextStyle(fontSize: 8),
+                                      style: TextStyle(fontSize: 8, color: Colors.white),
                                     ),
                                   ),
-                                  /*ButtonTheme.bar(
-                            // make buttons use the appropriate styles for cards
-                            child: ButtonBar(
-                              children: <Widget>[
-                                FlatButton(
-                                  child: const Text('Просмотреть'),
-                                  onPressed: () {},
-                                ),
-                                FlatButton(
-                                  child: const Text('Закрыть'),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ),*/
                                 ],
                               ),
                             )),
@@ -114,7 +87,7 @@ class _NewsPageState extends State<NewsPage> {
             //margin: EdgeInsets.symmetric(vertical: 20.0),
             height: 150,
             child: Card(
-                color: Colors.greenAccent,
+                color: Colors.blue,
                 child: Center(
                   child: ListTile(
                     leading: Icon(
@@ -124,11 +97,11 @@ class _NewsPageState extends State<NewsPage> {
                     title: Text(
                       "Информация о пользователе",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white),
                     ),
                     subtitle: Text(
                       "Иванов Иван Иванович",
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                 )),

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:office_management/screens/people_info_screen.dart';
+import 'package:office_management/screens/people_info_page.dart';
 
 class PeoplePage extends StatefulWidget {
   @override
@@ -31,24 +31,27 @@ class _PeoplePageState extends State<PeoplePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        body: new ListView.builder(
+    return Scaffold(
+        body: ListView.builder(
             itemCount: data == null ? 0 : data.length,
             itemBuilder: (BuildContext context, i) {
-              return new ListTile(
-                title: new Text(data[i]["name"]["first"]),
-                subtitle: new Text(data[i]["phone"]),
-                leading: new CircleAvatar(
-                  backgroundImage:
-                      new NetworkImage(data[i]["picture"]["thumbnail"]),
+              return Card(
+                color: Colors.blue,
+                child: ListTile(
+                  title: Text(data[i]["name"]["first"], style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white,),),
+                  subtitle: Text(data[i]["phone"], style: TextStyle(color: Colors.white,),),
+                  leading: CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(data[i]["picture"]["thumbnail"]),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                PeopleInfoPage(data[i])));
+                  },
                 ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              new PeopleInfoPage(data[i])));
-                },
               );
             }));
   }

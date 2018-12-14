@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:office_management/screens/home_screen.dart';
-import 'package:office_management/screens/info_screen.dart';
-import 'package:office_management/screens/login_screen.dart';
-import 'package:office_management/screens/news_screen.dart';
-import 'package:office_management/screens/people_screen.dart';
-import 'package:office_management/screens/service_screen.dart';
+import 'package:office_management/common/loading_state.dart';
+import 'package:office_management/screens/home_page.dart';
+import 'package:office_management/screens/info_page.dart';
+import 'package:office_management/screens/login_page.dart';
+import 'package:office_management/screens/news_page.dart';
+import 'package:office_management/screens/people_page.dart';
+import 'package:office_management/screens/register_page.dart';
+import 'package:office_management/screens/service_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,9 +18,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: <String,WidgetBuilder>{
-        "/HomeScreen": (BuildContext context) => HomeScreen(),
-        "/LoginScreen": (BuildContext context) => LoginScreen(),
+      routes: <String, WidgetBuilder>{
+        "/HomeScreen": (BuildContext context) => HomePage(),
+        "/LoginScreen": (BuildContext context) => LoginPage(),
+        "/RegisterPage": (BuildContext context) => RegisterPage(),
       },
       home: MyHomePage(title: 'Управление офисом'),
     );
@@ -35,69 +38,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _page = 0;
-  PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = new PageController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  void _onItemTapped(int page) {
-    _pageController.animateToPage(page, duration: const Duration(milliseconds: 300), curve: Curves.ease);
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      this._page = page;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: LoginScreen(),/*PageView(
-          children: <Widget>[
-            NewsPage(),
-            ServicePage(),
-            PeoplePage(),
-            InfoPage()
-          ],
-        onPageChanged: onPageChanged,
-        controller: _pageController,),
-        bottomNavigationBar: new Theme(
-          data: Theme.of(context).copyWith(
-              canvasColor: Colors.blue,
-              primaryColor: Colors.purple,
-              textTheme: Theme.of(context)
-                  .textTheme
-                  .copyWith(caption: new TextStyle(color: Colors.white))),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Text('Новости')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.local_laundry_service), title: Text('Сервисы')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.people), title: Text('Сотрудники')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.info), title: Text('Информация')),
-            ],
-            currentIndex: _page,
-            //fixedColor: Colors.deepPurple,
-            onTap: _onItemTapped,
-          ),
-        )*/);
+      body: LoginPage(),
+    );
   }
 }

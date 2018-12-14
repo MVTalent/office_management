@@ -2,7 +2,7 @@ class User {
   final String userName;
   final String token;
   final String email;
-  final int userId;
+  final String userId;
 
   User(this.userName, this.token, this.email, this.userId);
 
@@ -10,12 +10,12 @@ class User {
       : userName = json['name'],
         token = json['token'],
         email = json['email'],
-        userId = json['pk'];
+        userId = json['userId'];
 
   Map<String, dynamic> toJson() => {
         'name': userName,
         'token': token,
         'email': email,
-        'pk': userId,
+        'userId': userId,
       };
 }
