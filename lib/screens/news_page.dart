@@ -39,10 +39,11 @@ class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      child: Column(
-        children: <Widget>[
-          Container(
+      body: Container(
+        color: Colors.grey[800],
+        child: Column(
+          children: <Widget>[
+            Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
               height: 200,
               child: ListView.builder(
@@ -68,13 +69,15 @@ class _NewsPageState extends State<NewsPage> {
                                         : Icon(Icons.art_track, size: 60),
                                     title: Text(
                                       articles[i].title,
-                                      style: TextStyle(fontSize: 12, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white),
                                     ),
                                     subtitle: Text(
                                       articles[i].description != null
                                           ? articles[i].description
                                           : "",
-                                      style: TextStyle(fontSize: 8, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 8, color: Colors.white),
                                     ),
                                   ),
                                 ],
@@ -82,11 +85,12 @@ class _NewsPageState extends State<NewsPage> {
                             )),
                       );
                     }
-                  })),
-          Container(
-            //margin: EdgeInsets.symmetric(vertical: 20.0),
-            height: 150,
-            child: Card(
+                  }),
+            ),
+            Container(
+              //margin: EdgeInsets.symmetric(vertical: 20.0),
+              height: 150,
+              child: Card(
                 color: Colors.blue,
                 child: Center(
                   child: ListTile(
@@ -96,18 +100,22 @@ class _NewsPageState extends State<NewsPage> {
                     ),
                     title: Text(
                       "Информация о пользователе",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white),
                     ),
                     subtitle: Text(
                       "Иванов Иван Иванович",
                       style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
-                )),
-          )
-        ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

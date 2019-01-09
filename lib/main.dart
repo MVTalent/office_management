@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -23,12 +24,12 @@ class MyApp extends StatelessWidget {
         "/LoginScreen": (BuildContext context) => LoginPage(),
         "/RegisterPage": (BuildContext context) => RegisterPage(),
       },
-      home: MyHomePage(title: 'Управление офисом'),
+      home: LoginPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+/*class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -45,4 +46,4 @@ class _MyHomePageState extends State<MyHomePage> {
       body: LoginPage(),
     );
   }
-}
+}*/

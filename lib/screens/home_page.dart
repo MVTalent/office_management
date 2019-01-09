@@ -89,15 +89,18 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         drawer: Drawer(),
-        body: PageView(
-          children: <Widget>[
-            NewsPage(),
-            ServicePage(),
-            PeoplePage(),
-            InfoPage()
-          ],
-          onPageChanged: onPageChanged,
-          controller: _pageController,
+        body: Container(
+          color: Colors.grey[800],
+          child: PageView(
+            children: <Widget>[
+              NewsPage(),
+              ServicePage(),
+              PeoplePage(),
+              InfoPage()
+            ],
+            onPageChanged: onPageChanged,
+            controller: _pageController,
+          ),
         ),
         bottomNavigationBar: new Theme(
           data: Theme.of(context).copyWith(

@@ -30,7 +30,10 @@ class _RegisterPageState extends State<RegisterPage> {
         iconTheme: IconThemeData(color: Colors.black),
       ),
       backgroundColor: Colors.white,
-      body: Form(
+      body: Container(
+        color: Colors.grey[800],
+      )
+      /*Form(
         key: _formKey,
         child: Padding(
           padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
@@ -201,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ],
           ),
         ),
-      ),
+      ),*/
     );
   }
 }
