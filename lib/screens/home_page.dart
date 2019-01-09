@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:office_management/model/user.dart';
-import 'package:office_management/screens/info_page.dart';
+import 'package:office_management/screens/location_page.dart';
 import 'package:office_management/screens/news_page.dart';
 import 'package:office_management/screens/people_page.dart';
 import 'package:office_management/screens/service_page.dart';
@@ -15,9 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   User user;
-  int _page = 0;
+  int _selectedIndexPage = 0;
   PageController _pageController;
   String _title;
+
+  final _selectedPage = [
+    NewsPage(),
+    ServicePage(),
+    PeoplePage(),
+    LocationPage(),
+  ];
 
   @override
   void initState() {
@@ -45,10 +52,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onItemTapped(int page) {
-    _pageController.animateToPage(page,
-        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+   /* _pageController.animateToPage(page,
+        duration: const Duration(milliseconds: 300), curve: Curves.ease);*/
     setState(() {
-      switch (page) {
+      this._selectedIndexPage = page;
+      /*switch (page) {
         case 0:
           _title = "Новости";
           break;
@@ -61,13 +69,13 @@ class _HomePageState extends State<HomePage> {
         case 3:
           _title = "Информация";
           break;
-      }
+      }*/
     });
   }
 
   void onPageChanged(int page) {
     setState(() {
-      this._page = page;
+      this._selectedIndexPage = page;
     });
   }
 
@@ -91,18 +99,21 @@ class _HomePageState extends State<HomePage> {
         drawer: Drawer(),
         body: Container(
           color: Colors.grey[800],
-          child: PageView(
+          child: Center(
+            child: _selectedPage.elementAt(_selectedIndexPage),
+          ),/*PageView(
+            physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               NewsPage(),
               ServicePage(),
               PeoplePage(),
-              InfoPage()
+              LocationPage()
             ],
             onPageChanged: onPageChanged,
-            controller: _pageController,
-          ),
+            //controller: _pageController,
+          ),*/
         ),
-        bottomNavigationBar: new Theme(
+        bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
               canvasColor: Colors.blue,
               primaryColor: Colors.purple,
@@ -122,7 +133,7 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.info), title: Text('Информация')),
             ],
-            currentIndex: _page,
+            currentIndex: _selectedIndexPage,
             //fixedColor: Colors.deepPurple,
             onTap: _onItemTapped,
           ),

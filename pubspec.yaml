@@ -25,6 +25,8 @@ dependencies:
   shared_preferences: ^0.4.3
   url_launcher: ^4.0.2
   font_awesome_flutter: ^8.2.0
+  flutter_map: ^0.1.4
+  location: ^1.4.1
 
 dev_dependencies:
   flutter_test:

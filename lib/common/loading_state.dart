@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:office_management/screens/info_page.dart';
+import 'package:office_management/screens/location_page.dart';
 import 'package:office_management/screens/news_page.dart';
 import 'package:office_management/screens/people_page.dart';
 import 'package:office_management/screens/service_page.dart';
@@ -52,7 +52,7 @@ abstract class LoadingBaseState<T extends StatefulWidget> extends State<T> {
             NewsPage(),
             ServicePage(),
             PeoplePage(),
-            InfoPage()
+            LocationPage()
           ],
           onPageChanged: onPageChanged,
           controller: _pageController,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:office_management/common/loading_state.dart';
 import 'package:office_management/screens/home_page.dart';
-import 'package:office_management/screens/info_page.dart';
+import 'package:office_management/screens/location_page.dart';
 import 'package:office_management/screens/login_page.dart';
 import 'package:office_management/screens/news_page.dart';
 import 'package:office_management/screens/people_page.dart';
