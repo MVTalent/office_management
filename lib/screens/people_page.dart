@@ -10,28 +10,31 @@ class PeoplePage extends StatefulWidget {
 }
 
 class _PeoplePageState extends State<PeoplePage> {
-  String url = 'https://randomuser.me/api/?results=15';
+  String url = 'https://randomuser.me/api/?results=30';
   List data;
+  bool _loadingPeopleInProgress;
 
-  Future<String> getUsers() async {
+  getUsers() async {
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
 
     setState(() {
       var extractdata = json.decode(response.body);
       data = extractdata["results"];
+      _loadingPeopleInProgress = false;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    this.getUsers();
+    _loadingPeopleInProgress = true;
+    getUsers();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _loadingPeopleInProgress == true ? CircularProgressIndicator() : Scaffold(
         body: ListView.builder(
             itemCount: data == null ? 0 : data.length,
             itemBuilder: (BuildContext context, i) {

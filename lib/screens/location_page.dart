@@ -11,9 +11,9 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-
   Map<String, double> _startLocation;
   Map<String, double> _currentLocation;
+  bool _loadingInProgress;
 
   StreamSubscription<Map<String, double>> _locationSubscription;
 
@@ -29,80 +29,73 @@ class _LocationPageState extends State<LocationPage> {
   void initState() {
     super.initState();
 
+    _loadingInProgress = true;
+
     initPlatformState();
 
     _locationSubscription =
-        _location.onLocationChanged().listen((Map<String,double> result) {
-          setState(() {
-            _currentLocation = result;
-          });
-        });
+        _location.onLocationChanged().listen((Map<String, double> result) {
+      setState(() {
+        _currentLocation = result;
+        _loadingInProgress = false;
+      });
+    });
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   initPlatformState() async {
     Map<String, double> location;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-
     try {
       _permission = await _location.hasPermission();
       location = await _location.getLocation();
-
+      setState(() {
+        _startLocation = location;
+      });
 
       error = null;
-    } catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        error = 'Permission denied';
-      } else if (e.code == 'PERMISSION_DENIED_NEVER_ASK') {
-        error = 'Permission denied - please ask the user to enable it from the app settings';
-      }
-
-      location = null;
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    //if (!mounted) return;
-
-    setState(() {
-      _startLocation = location;
-    });
-
+    } catch (e) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //appBar: AppBar(title: new Text('Leaflet Maps')),
-      body: FlutterMap(
-        options:
-            new MapOptions(center: new LatLng(_currentLocation["latitude"], _currentLocation["longitude"]), minZoom: 10.0),
-        layers: [
-          new TileLayerOptions(
-              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c']),
-          new MarkerLayerOptions(
-            markers: [
-              new Marker(
-                width: 45.0,
-                height: 45.0,
-                point: new LatLng(40.73, -74.00),
-                builder: (context) => new Container(
-                      child: IconButton(
-                        icon: Icon(Icons.location_on),
-                        color: Colors.blue,
-                        iconSize: 45.0,
-                        onPressed: () {
-                          print('Marker tapped');
-                        },
-                      ),
+    return _loadingInProgress == true
+        ? new Center(
+            child: CircularProgressIndicator(),
+          )
+        : new Scaffold(
+            //appBar: AppBar(title: new Text('Leaflet Maps')),
+            body: new FlutterMap(
+              options: new MapOptions(
+                  center: new LatLng(_currentLocation["latitude"],
+                      _currentLocation["longitude"]),
+                  minZoom: 10.0),
+              layers: [
+                new TileLayerOptions(
+                    urlTemplate:
+                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    subdomains: ['a', 'b', 'c']),
+                new MarkerLayerOptions(
+                  markers: [
+                    new Marker(
+                      width: 45.0,
+                      height: 45.0,
+                      point: new LatLng(_currentLocation["latitude"],
+                          _currentLocation["longitude"]),
+                      builder: (context) => new Container(
+                            child: IconButton(
+                              icon: Icon(Icons.location_on),
+                              color: Colors.blue,
+                              iconSize: 45.0,
+                              onPressed: () {
+                                print('Marker tapped');
+                              },
+                            ),
+                          ),
                     ),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+                  ],
+                ),
+              ],
+            ),
+          );
   }
 }

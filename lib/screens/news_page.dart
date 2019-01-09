@@ -14,21 +14,25 @@ class _NewsPageState extends State<NewsPage> {
   String url =
       "https://newsapi.org/v2/top-headlines?country=ru&category=technology&apiKey=b57085cf76ae4932af4bbd9bb92ff593";
   List<Article> articles;
+  bool _loadingArticleInProgress;
+  bool _loadingUserInProgress;
 
-  Future<List<Article>> fetchArticle() async {
+  fetchArticle() async {
     final response = await http.get(Uri.encodeFull(url));
     setState(() {
       articles = (json.decode(response.body)['articles'] as List)
           .map((e) => Article.fromJson(e))
           .toList();
+      _loadingArticleInProgress = false;
     });
-    return articles;
   }
 
   @override
   void initState() {
     super.initState();
-    this.fetchArticle();
+    _loadingArticleInProgress = true;
+    _loadingUserInProgress = true;
+    fetchArticle();
   }
 
   @override
@@ -46,7 +50,7 @@ class _NewsPageState extends State<NewsPage> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
               height: 200,
-              child: ListView.builder(
+              child: _loadingArticleInProgress == true ? Center(child: CircularProgressIndicator(),) : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: articles == null ? 0 : articles.length,
                   itemBuilder: (BuildContext context, i) {
