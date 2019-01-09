@@ -1,9 +1,15 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:office_management/model/article.dart';
 import 'package:http/http.dart' as http;
+import 'package:office_management/model/user.dart';
+import 'package:office_management/service/rest_client.dart';
+import 'package:office_management/service/rest_client.dart';
+import 'package:office_management/service/shared_preferences_service_impl.dart';
+import 'package:office_management/service/shared_storage.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -11,16 +17,19 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  String url =
+  String _url =
       "https://newsapi.org/v2/top-headlines?country=ru&category=technology&apiKey=b57085cf76ae4932af4bbd9bb92ff593";
   List<Article> articles;
   bool _loadingArticleInProgress;
   bool _loadingUserInProgress;
+  List<Article> _articles;
+  User _user;
+  bool _loading = true;
 
   fetchArticle() async {
-    final response = await http.get(Uri.encodeFull(url));
+    final response = await http.get(Uri.encodeFull(_url));
     setState(() {
-      articles = (json.decode(response.body)['articles'] as List)
+      _articles = (json.decode(response.body)['articles'] as List)
           .map((e) => Article.fromJson(e))
           .toList();
       _loadingArticleInProgress = false;
@@ -33,6 +42,15 @@ class _NewsPageState extends State<NewsPage> {
     _loadingArticleInProgress = true;
     _loadingUserInProgress = true;
     fetchArticle();
+    getUser().then((user) => setState(() {
+      _user = user;
+      _loading = false;
+    }));
+  }
+
+  Future getUser() async {
+    SharedStorage sharedStorage = SharedPreferencesStorageImpl();
+    return sharedStorage.getUserFromStorage();
   }
 
   @override
@@ -52,7 +70,7 @@ class _NewsPageState extends State<NewsPage> {
               height: 200,
               child: _loadingArticleInProgress == true ? Center(child: CircularProgressIndicator(),) : ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: articles == null ? 0 : articles.length,
+                  itemCount: _articles == null ? 0 : _articles.length,
                   itemBuilder: (BuildContext context, i) {
                     if (articles == null || articles.length == 0) {
                       return CircularProgressIndicator();

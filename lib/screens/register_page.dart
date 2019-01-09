@@ -12,6 +12,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _doublePasswordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Container(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 15.0),
+                    padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 15.0),
                     child: Text(
                       "Введите данные пользователя",
                       style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -77,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
                 child: Text(
                   "Электронная почта",
                   style: TextStyle(
@@ -90,6 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                 child: TextFormField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     //hintText: 'Введите адрес электронной почты',
@@ -109,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
                 child: Text(
                   "Пароль",
                   style: TextStyle(
@@ -122,6 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                 child: TextFormField(
+                  controller: _passwordController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Введите пароль',
@@ -141,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
                 child: Text(
                   "Пароль еще раз",
                   style: TextStyle(
@@ -154,6 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                 child: TextFormField(
+                  controller: _doublePasswordController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Введите пароль',
@@ -173,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
                 child: Container(
                   height: 65.0,
                   child: Row(
@@ -189,9 +194,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (_formKey.currentState.validate()) {
                               SystemChannels.textInput
                                   .invokeMethod('TextInput.hide');
-                              loginRequest(
+                              registerUserRequest(
                                   context,
                                   _userNameController.text,
+                                  _emailController.text,
                                   _passwordController.text);
                             }
                           },

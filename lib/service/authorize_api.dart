@@ -1,18 +1,18 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:office_management/common/show_dialog.dart';
-import 'package:office_management/model/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import "dart:async";
+import "dart:io";
+import "package:flutter/material.dart";
+import "package:http/http.dart" as http;
+import "package:office_management/common/show_dialog.dart";
+import "package:office_management/model/user.dart";
+import "package:shared_preferences/shared_preferences.dart";
+import "dart:convert";
 
 Future<User> loginRequest(BuildContext context, String username, String password) async {
   final url = "https://localhost:8080/login";
 
   Map<String, String> body = {
-    'username': username,
-    'password': password,
+    "username": username,
+    "password": password,
   };
 
   /*final response = await http.post(
@@ -30,7 +30,7 @@ Future<User> loginRequest(BuildContext context, String username, String password
   //if (response.statusCode == 200) {
     final userJson = json.decode(userData);
     saveCurrentLogin(userJson);
-    Navigator.of(context).pushReplacementNamed('/HomeScreen');
+    Navigator.of(context).pushReplacementNamed("/HomeScreen");
 
     return User.fromJson(userJson);
   /*} else {
@@ -77,30 +77,38 @@ Future<String> getToken() async {
 
 Future<Null> saveLogout() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  await preferences.setString('LastUser', "");
-  await preferences.setString('LastToken', "");
-  await preferences.setString('LastEmail', "");
-  await preferences.setString('LastUserId', "");
+  await preferences.setString("LastUserName", "");
+  await preferences.setString("LastToken", "");
+  await preferences.setString("LastEmail", "");
+  await preferences.setString("LastUserId", "");
 }
 
 Future<Null> saveCurrentLogin(Map responseJson) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  var user;
+  String userName;
   if ((responseJson != null && responseJson.isNotEmpty)) {
-    user = User.fromJson(responseJson).userName;
+    userName = User.fromJson(responseJson).userName;
   } else {
-    user = "";
+    userName = "";
   }
   var token = (responseJson != null && responseJson.isNotEmpty) ? User.fromJson(responseJson).token : "";
   var email = (responseJson != null && responseJson.isNotEmpty) ? User.fromJson(responseJson).email : "";
   var id = (responseJson != null && responseJson.isNotEmpty) ? User.fromJson(responseJson).userId : "";
 
-  await preferences.setString('LastUser', (user != null && user.length > 0) ? user : "");
-  await preferences.setString('LastToken', (token != null && token.length > 0) ? token : "");
-  await preferences.setString('LastEmail', (email != null && email.length > 0) ? email : "");
-  await preferences.setString('LastUserId', (id != null && id.length > 0) ? id : "");
+  await preferences.setString("LastUserName", (userName != null && userName.length > 0) ? userName : "");
+  await preferences.setString("LastToken", (token != null && token.length > 0) ? token : "");
+  await preferences.setString("LastEmail", (email != null && email.length > 0) ? email : "");
+  await preferences.setString("LastUserId", (id != null && id.length > 0) ? id : "");
 }
 
 Future<User> registerUserRequest(BuildContext context, String username, String email, String password) {
+  final url = "https://localhost:8080/register";
+
+  Map<String, String> body = {
+    "username": username,
+    "email": email,
+    "password": password,
+  };
+
   return null;
 }

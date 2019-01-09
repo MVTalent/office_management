@@ -30,25 +30,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _pageController = new PageController();
-    _getSharedPreferences();
+    //_getSharedPreferences();
   }
 
   @override
   void dispose() {
     super.dispose();
     _pageController.dispose();
-  }
-
-  _getSharedPreferences() async {
-    //TODO перенести в общий класс
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String lastUser = preferences.getString("LastUser");
-    String lastToken = preferences.getString("LastToken");
-    String lastEmail = preferences.getString("LastEmail");
-    String lastUserId = preferences.getString("LastUserId");
-    setState(() {
-      user = User(lastUser, lastToken, lastEmail, lastUserId);
-    });
   }
 
   void _onItemTapped(int page) {
@@ -96,7 +84,24 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        drawer: Drawer(),
+        drawer: Drawer(
+          child: new ListView(
+            children: <Widget>[
+              new DrawerHeader(
+                child: new Text("Drawer Header"),
+                decoration: new BoxDecoration(
+                  color: Colors.blue,
+                ),
+              ),
+              new Text("Item 1"),
+              new Text("Item 2"),
+              new Text("Item 3"),
+              new Text("Item 4"),
+              new Text("Item 5"),
+              new Text("Item 6"),
+            ],
+          ),
+        ),
         body: Container(
           color: Colors.grey[800],
           child: Center(
